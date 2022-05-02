@@ -1,0 +1,155 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Tiles/Transparent/tile_0073.png" type="Texture" id=2]
+[ext_resource path="res://World.gd" type="Script" id=3]
+[ext_resource path="res://PlatformSpawner.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Platform.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Tiles/Transparent/tile_0017.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Tiles/Transparent/tile_0036.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Tiles/Transparent/tile_0034.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Tiles/Transparent/tile_0038.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Tiles/Transparent/tile_0033.png" type="Texture" id=10]
+[ext_resource path="res://PixelFontSize6.tres" type="DynamicFont" id=11]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 2.5, 31.5 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 160, 5 )
+
+[node name="World" type="Node" groups=["World"]]
+pause_mode = 2
+script = ExtResource( 3 )
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 163, 116 )
+
+[node name="PlatformSpawner" parent="." instance=ExtResource( 4 )]
+position = Vector2( 320, 0 )
+
+[node name="StartPlatform" parent="." instance=ExtResource( 5 )]
+position = Vector2( 0, 128 )
+
+[node name="TileMap" parent="StartPlatform" index="0"]
+tile_data = PoolIntArray( 0, 2, 0, 1, 2, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2, 0, 6, 2, 0, 7, 2, 0, 8, 2, 0, 9, 2, 0, 10, 2, 0, 11, 2, 0, 12, 2, 0, 13, 3, 0, 16, 1, 0, 17, 2, 0, 18, 2, 0, 19, 3, 0 )
+
+[node name="VisibilityNotifier2D" parent="StartPlatform" index="1"]
+position = Vector2( 152, 0 )
+scale = Vector2( 16.2, 1 )
+
+[node name="ArrowSign" type="Sprite" parent="StartPlatform"]
+position = Vector2( 142, -15 )
+texture = ExtResource( 2 )
+
+[node name="TreeFoliage" type="Sprite" parent="StartPlatform"]
+position = Vector2( 88, -42 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 10 )
+
+[node name="TreeTrunk" type="Sprite" parent="StartPlatform"]
+position = Vector2( 88, -15 )
+texture = ExtResource( 8 )
+
+[node name="Grass-1" type="Sprite" parent="StartPlatform"]
+position = Vector2( 76, -13 )
+texture = ExtResource( 7 )
+
+[node name="Grass-2" type="Sprite" parent="StartPlatform"]
+position = Vector2( 35, -14 )
+texture = ExtResource( 9 )
+
+[node name="Flowers" type="Sprite" parent="StartPlatform"]
+position = Vector2( 116, -14 )
+texture = ExtResource( 6 )
+
+[node name="Start" type="Area2D" parent="StartPlatform"]
+position = Vector2( 211, -17 )
+
+[node name="StartCollision" type="CollisionShape2D" parent="StartPlatform/Start"]
+position = Vector2( 2.5, -21.5 )
+shape = SubResource( 1 )
+
+[node name="StartMenu" type="CenterContainer" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -127.0
+margin_bottom = -100.0
+
+[node name="Label" type="Label" parent="StartMenu"]
+margin_left = 121.0
+margin_top = 6.0
+margin_right = 198.0
+margin_bottom = 21.0
+custom_fonts/font = ExtResource( 11 )
+text = "Press space to Start
+Press esc to Quit"
+align = 1
+valign = 1
+
+[node name="ScoreLabel" type="CenterContainer" parent="."]
+anchor_right = 1.0
+margin_bottom = 22.0
+
+[node name="Label" type="Label" parent="ScoreLabel"]
+margin_left = 157.0
+margin_top = 8.0
+margin_right = 162.0
+margin_bottom = 14.0
+custom_fonts/font = ExtResource( 11 )
+text = "0"
+align = 1
+valign = 1
+
+[node name="HighscoreLabel" type="CenterContainer" parent="."]
+anchor_right = 1.0
+margin_bottom = 30.0
+
+[node name="Label" type="Label" parent="HighscoreLabel"]
+margin_left = 128.0
+margin_top = 7.0
+margin_right = 192.0
+margin_bottom = 22.0
+custom_fonts/font = ExtResource( 11 )
+text = "Highscore:
+1000 (by Josiah)"
+align = 1
+valign = 1
+
+[node name="InstructionsLabel" type="CenterContainer" parent="."]
+anchor_right = 1.0
+margin_top = 14.0
+margin_bottom = 28.0
+
+[node name="Label" type="Label" parent="InstructionsLabel"]
+margin_left = 121.0
+margin_top = 4.0
+margin_right = 199.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 11 )
+text = "Press space to Jump"
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="Void" type="Area2D" parent="."]
+position = Vector2( 10, 148 )
+
+[node name="VoidCollision" type="CollisionShape2D" parent="Void"]
+position = Vector2( 150, -3 )
+shape = SubResource( 2 )
+
+[connection signal="body_entered" from="StartPlatform/Start" to="." method="_on_Start_body_entered"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
+[connection signal="body_entered" from="Void" to="." method="_on_Void_body_entered"]
+
+[editable path="Player"]
+[editable path="StartPlatform"]

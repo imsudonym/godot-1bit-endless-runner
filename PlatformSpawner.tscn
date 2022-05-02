@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://PlatformSpawner.gd" type="Script" id=1]
+
+[node name="PlatformSpawner" type="Node2D"]
+pause_mode = 1
+script = ExtResource( 1 )
+
+[node name="SpawnPoint" type="Position2D" parent="."]
+position = Vector2( 0, 128 )
+
+[node name="Timer" type="Timer" parent="."]
+process_priority = 13
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
