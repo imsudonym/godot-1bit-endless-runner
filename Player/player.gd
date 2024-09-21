@@ -10,9 +10,10 @@ extends CharacterBody2D
 
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
-	jump_check()
 	update_animations()
 	move_and_slide()
+	if not get_tree().paused:
+		jump_check()
 
 func is_moving(input_axis):
 	return input_axis != 0
@@ -42,3 +43,4 @@ func update_animations():
 
 func play_hurt_sound():
 	hurt_sound_effect.play()
+	animation_player.play("down")

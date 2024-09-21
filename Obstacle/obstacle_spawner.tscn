@@ -7,6 +7,14 @@ script = ExtResource("1_8gdfs")
 
 [node name="Timer" type="Timer" parent="."]
 
-[node name="SpawnPoint" type="Marker2D" parent="."]
+[node name="LandSpawnPoint" type="Marker2D" parent="."]
+
+[node name="AirSpawnPoints" type="Node2D" parent="."]
+
+[node name="SpawnPoint" type="Marker2D" parent="AirSpawnPoints"]
+position = Vector2(0, -12)
+
+[node name="SpawnPoint2" type="Marker2D" parent="AirSpawnPoints"]
+position = Vector2(0, -27)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

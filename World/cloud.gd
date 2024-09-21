@@ -1,6 +1,6 @@
 extends Node2D
 
-const SPEED = 150
+const SPEED = 20
 @onready var sprite_2d: Sprite2D = $Sprite2D
 
 func _ready() -> void:

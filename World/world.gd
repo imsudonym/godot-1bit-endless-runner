@@ -1,6 +1,9 @@
 extends Node
 
+@onready var bg_object_spawner_timer: Timer = $BgObjectSpawner/Timer
 @onready var obstacle_spawner_timer: Timer = $ObstacleSpawner/Timer
+
+@onready var game_over_delay: Timer = $GameOverDelay
 @onready var score_timer: Timer = $ScoreTimer
 @onready var player: CharacterBody2D = $Player
 
@@ -8,6 +11,7 @@ extends Node
 @onready var game_over_label: CenterContainer = $GameOver
 @onready var game_over_instruction_label: CenterContainer = $GameOverInstruction
 @onready var score_label: Label = $ScoreLabel
+@onready var hundreths_score_sound: AudioStreamPlayer = $HundrethsScoreSound
 
 var is_game_started = false
 var is_game_over = false
@@ -20,9 +24,10 @@ func _ready():
 	control_instruction_label.show()
 
 func _process(delta):
-	var accept = Input.is_action_just_pressed('ui_accept')
+	var accept = Input.is_action_just_pressed('jump')
 	if not is_game_started or is_game_over:
-		if accept: start_game()
+		if accept and game_over_delay.time_left == 0:
+			start_game()
 
 func start_game():
 	clear_world()
@@ -37,6 +42,7 @@ func start_game():
 	update_score(0)
 	score_timer.start()
 	obstacle_spawner_timer.start()
+	bg_object_spawner_timer.start()
 
 func clear_world():
 	var obstacles = get_tree().get_nodes_in_group("obstacles")
@@ -53,12 +59,14 @@ func game_over():
 	is_game_over = true
 	is_game_started = false
 
+	bg_object_spawner_timer.stop()
 	obstacle_spawner_timer.stop()
 	score_timer.stop()
 	game_over_label.show()
 	game_over_instruction_label.show()
 	
 	check_highscore()
+	game_over_delay.start()
 
 func check_highscore():
 	if Global.score > Global.high_score:
@@ -74,3 +82,5 @@ func _on_player_hurt():
 
 func _on_score_timer_timeout() -> void:
 	update_score(Global.score + 1)
+	if Global.score % 100 == 0:
+		hundreths_score_sound.play()

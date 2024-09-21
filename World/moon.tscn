@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://cw4yi4mgogjk8"]
+
+[ext_resource type="Script" path="res://World/moon.gd" id="1_3fptp"]
+[ext_resource type="Texture2D" uid="uid://dwwn65hkihh3b" path="res://Assets/1bit 16px icons part-2.png" id="1_7vgxe"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bqju2"]
+atlas = ExtResource("1_7vgxe")
+region = Rect2(249, 464, 30, 38)
+
+[node name="Moon" type="Node2D"]
+script = ExtResource("1_3fptp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_bqju2")

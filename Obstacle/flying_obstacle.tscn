@@ -1,0 +1,107 @@
+[gd_scene load_steps=8 format=3 uid="uid://ja4qtvkesgvo"]
+
+[ext_resource type="Script" path="res://Obstacle/flying_obstacle.gd" id="1_jo28h"]
+[ext_resource type="Texture2D" uid="uid://d3i4o67nnl5fc" path="res://Assets/monochrome_tilemap_transparent_packed.png" id="2_cc1mf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ma0uu"]
+size = Vector2(2.99997, 8.00001)
+
+[sub_resource type="Animation" id="Animation_6rlea"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [380]
+}
+
+[sub_resource type="Animation" id="Animation_sp4vf"]
+resource_name = "moving"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [380, 381]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_22u7u"]
+_data = {
+"RESET": SubResource("Animation_6rlea"),
+"moving": SubResource("Animation_sp4vf")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ljbwn"]
+radius = 5.09902
+
+[node name="FlyingObstacle" type="Node2D" groups=["obstacles"]]
+script = ExtResource("1_jo28h")
+
+[node name="Bee" type="Area2D" parent="."]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Bee"]
+position = Vector2(0, -1)
+texture = ExtResource("2_cc1mf")
+hframes = 20
+vframes = 20
+frame = 380
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bee"]
+position = Vector2(0, -1.5)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_ma0uu")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Bee"]
+position = Vector2(1.49012e-07, -1.5)
+scale = Vector2(0.4, 0.15)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Bee"]
+libraries = {
+"": SubResource("AnimationLibrary_22u7u")
+}
+autoplay = "moving"
+
+[node name="Monster" type="Area2D" parent="."]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Monster"]
+position = Vector2(0, -1)
+texture = ExtResource("2_cc1mf")
+hframes = 20
+vframes = 20
+frame = 380
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Monster"]
+position = Vector2(0, 1)
+rotation = 1.5708
+shape = SubResource("CircleShape2D_ljbwn")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Monster"]
+position = Vector2(-5.96046e-08, -9.53674e-08)
+scale = Vector2(0.5, 0.6)
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Monster"]
+libraries = {
+"": SubResource("AnimationLibrary_22u7u")
+}
+autoplay = "moving"
+
+[connection signal="body_entered" from="Bee" to="." method="_on_obstacle_body_entered"]
+[connection signal="screen_exited" from="Bee/VisibleOnScreenNotifier2D" to="." method="queue_free"]
+[connection signal="body_entered" from="Monster" to="." method="_on_obstacle_body_entered"]
+[connection signal="screen_exited" from="Monster/VisibleOnScreenNotifier2D" to="." method="queue_free"]

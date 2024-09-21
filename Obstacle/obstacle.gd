@@ -12,12 +12,7 @@ func _process(delta: float) -> void:
 	if not get_tree().paused:
 		position.x -= SPEED * delta
 
-func _on_flower_pots_body_entered(body: Node2D) -> void:
-	if body.has_method("play_hurt_sound"):
-		body.call("play_hurt_sound")
-	emit_signal("player_hurt")
-
-func _on_mushrooms_body_entered(body: Node2D) -> void:
+func _on_obstacle_body_entered(body: Node2D) -> void:
 	if body.has_method("play_hurt_sound"):
 		body.call("play_hurt_sound")
 	emit_signal("player_hurt")
