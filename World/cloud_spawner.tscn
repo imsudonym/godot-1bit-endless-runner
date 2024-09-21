@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cicada4eaujir"]
+
+[ext_resource type="Script" path="res://World/cloud_spawner.gd" id="1_1a0nv"]
+
+[node name="CloudSpawner" type="Node2D"]
+script = ExtResource("1_1a0nv")
+
+[node name="SpawnPoint1" type="Marker2D" parent="."]
+
+[node name="SpawnPoint2" type="Marker2D" parent="."]
+position = Vector2(0, 4)
+
+[node name="Timer" type="Timer" parent="."]

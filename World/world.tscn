@@ -1,0 +1,99 @@
+[gd_scene load_steps=9 format=3 uid="uid://wmtdnsus072t"]
+
+[ext_resource type="Script" path="res://World/world.gd" id="1_5idqv"]
+[ext_resource type="FontFile" uid="uid://x6d7p5tic3au" path="res://World/PixelFontSize6.tres" id="2_id824"]
+[ext_resource type="PackedScene" uid="uid://c7mc1gad3vw7v" path="res://Obstacle/obstacle_spawner.tscn" id="3_owxjo"]
+[ext_resource type="PackedScene" uid="uid://cwl7txi0uuy2g" path="res://Player/player.tscn" id="4_5ygm6"]
+[ext_resource type="PackedScene" uid="uid://dqicwuxqifw62" path="res://World/platform.tscn" id="5_6wh5j"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ikbdn"]
+font = ExtResource("2_id824")
+font_size = 6
+
+[sub_resource type="LabelSettings" id="LabelSettings_op2ch"]
+font = ExtResource("2_id824")
+font_size = 6
+
+[sub_resource type="LabelSettings" id="LabelSettings_wf1wi"]
+font = ExtResource("2_id824")
+font_size = 6
+
+[node name="World" type="Node" groups=["World"]]
+process_mode = 3
+script = ExtResource("1_5idqv")
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 244.0
+offset_top = 10.0
+offset_right = 312.0
+offset_bottom = 16.0
+theme_override_fonts/font = ExtResource("2_id824")
+text = "HI 00000 00000"
+label_settings = SubResource("LabelSettings_ikbdn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ControlInstruction" type="CenterContainer" parent="."]
+offset_left = 1.0
+offset_top = 44.0
+offset_right = 257.0
+offset_bottom = 84.0
+scale = Vector2(1.25, 1.25)
+
+[node name="Label" type="Label" parent="ControlInstruction"]
+texture_filter = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_id824")
+text = "Press space to Jump"
+label_settings = SubResource("LabelSettings_op2ch")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameOver" type="CenterContainer" parent="."]
+visible = false
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 29.0
+offset_right = -63.0
+offset_bottom = 74.0
+grow_horizontal = 2
+scale = Vector2(1.25, 1.25)
+
+[node name="Label" type="Label" parent="GameOver"]
+texture_filter = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_id824")
+text = "Game Over"
+label_settings = SubResource("LabelSettings_wf1wi")
+
+[node name="GameOverInstruction" type="CenterContainer" parent="."]
+visible = false
+offset_top = 51.0
+offset_right = 320.0
+offset_bottom = 91.0
+
+[node name="Label" type="Label" parent="GameOverInstruction"]
+texture_filter = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_id824")
+text = "Press space to try again"
+label_settings = SubResource("LabelSettings_wf1wi")
+
+[node name="ScoreTimer" type="Timer" parent="."]
+wait_time = 0.25
+
+[node name="ObstacleSpawner" parent="." instance=ExtResource("3_owxjo")]
+position = Vector2(308, 124)
+
+[node name="Player" parent="." instance=ExtResource("4_5ygm6")]
+z_index = 2
+position = Vector2(40, 116)
+
+[node name="Platform" parent="." instance=ExtResource("5_6wh5j")]
+position = Vector2(140, 108)
+layer_0/tile_data = PackedInt32Array(65547, 327706, 3, 65546, 327706, 3, 65545, 327706, 3, 65544, 327706, 3, 65543, 327706, 3, 65542, 327706, 3, 65541, 327706, 3, 65540, 327706, 3, 65539, 327706, 3, 65538, 327706, 3, 65537, 327706, 3, 65536, 327706, 3, 131071, 327706, 3, 131070, 327706, 3, 131069, 327706, 3, 131068, 327706, 3, 131067, 327706, 3, 131066, 327706, 3, 131065, 327706, 3, 131064, 327706, 3, 131063, 327706, 3, 131062, 262170, 3, 65548, 393242, 3)
+
+[connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
+
+[editable path="ObstacleSpawner"]

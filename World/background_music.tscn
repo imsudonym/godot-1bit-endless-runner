@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4dm4cfxttibq"]
+
+[ext_resource type="AudioStream" uid="uid://bcafe3pma32hp" path="res://Assets/bgm.wav" id="1_4k6j2"]
+[ext_resource type="Script" path="res://World/background_music.gd" id="2_obtkt"]
+
+[node name="BackgroundMusic" type="AudioStreamPlayer"]
+stream = ExtResource("1_4k6j2")
+autoplay = true
+script = ExtResource("2_obtkt")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

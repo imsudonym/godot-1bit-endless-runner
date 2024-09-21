@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://dmekf1p2o4uo"]
+
+[ext_resource type="Script" path="res://Obstacle/obstacle.gd" id="1_cthao"]
+[ext_resource type="Texture2D" uid="uid://div0lpu1m1uaw" path="res://Assets/tile_0017.png" id="2_xb1sb"]
+[ext_resource type="Texture2D" uid="uid://dopitfd7dcl86" path="res://Assets/tile_0054.png" id="3_77u7i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xscq7"]
+size = Vector2(14, 10)
+
+[node name="Obstacle" type="Node2D" groups=["obstacles"]]
+script = ExtResource("1_cthao")
+
+[node name="FlowerPots" type="Area2D" parent="."]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="FlowerPots"]
+position = Vector2(0, -7)
+texture = ExtResource("2_xb1sb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FlowerPots"]
+position = Vector2(-1, -5)
+shape = SubResource("RectangleShape2D_xscq7")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="FlowerPots"]
+position = Vector2(0, -5)
+scale = Vector2(0.6, 0.5)
+
+[node name="Mushrooms" type="Area2D" parent="."]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Mushrooms"]
+position = Vector2(0, -8)
+texture = ExtResource("3_77u7i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mushrooms"]
+position = Vector2(-0.5, -6.5)
+shape = SubResource("RectangleShape2D_xscq7")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Mushrooms"]
+position = Vector2(0, -5)
+scale = Vector2(0.6, 0.5)
+
+[connection signal="body_entered" from="FlowerPots" to="." method="_on_flower_pots_body_entered"]
+[connection signal="screen_exited" from="FlowerPots/VisibleOnScreenNotifier2D" to="." method="queue_free"]
+[connection signal="body_entered" from="Mushrooms" to="." method="_on_mushrooms_body_entered"]
+[connection signal="screen_exited" from="Mushrooms/VisibleOnScreenNotifier2D" to="." method="queue_free"]
