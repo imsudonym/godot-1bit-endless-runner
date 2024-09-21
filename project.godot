@@ -6,41 +6,36 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
-
-_global_script_classes=[ {
-"base": "",
-"class": "GitAPI",
-"language": "NativeScript",
-"path": "res://addons/godot-git-plugin/git_api.gdns"
-} ]
-_global_script_class_icons={
-"GitAPI": ""
-}
+config_version=5
 
 [application]
 
-config/name="Flappy Bird"
-run/main_scene="res://World.tscn"
-config/icon="res://icon.png"
+config/name="Hopper"
+run/main_scene="res://World/world.tscn"
+config/features=PackedStringArray("4.3")
+config/icon="res://Assets/icon.png"
 
 [autoload]
 
-SaveAndLoad="*res://SaveAndLoad.gd"
-Global="*res://Global.gd"
+SaveAndLoad="*res://World/save_and_load.gd"
+Global="*res://World/global.gd"
+BackgroundMusic="*res://World/background_music.tscn"
 
 [display]
 
-window/size/width=320
-window/size/height=180
-window/size/test_width=1024
-window/size/test_height=600
-window/stretch/mode="2d"
-window/stretch/aspect="keep"
+window/size/viewport_width=320
+window/size/viewport_height=150
+window/size/window_width_override=1024
+window/size/window_height_override=720
+window/stretch/mode="canvas_items"
 
 [gdnative]
 
-singletons=[ "res://addons/godot-git-plugin/git_api.gdnlib" ]
+singletons=["res://addons/godot-git-plugin/git_api.gdnlib"]
+
+[global_group]
+
+obstacles=""
 
 [importer_defaults]
 
@@ -66,13 +61,27 @@ texture={
 "svg/scale": 1.0
 }
 
+[input]
+
+jump={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":32,"key_label":0,"unicode":32,"location":0,"echo":false,"script":null)
+]
+}
+
+[layer_names]
+
+2d_physics/layer_1="player"
+2d_physics/layer_3="platform"
+
 [physics]
 
 common/enable_pause_aware_picking=true
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
-vram_compression/import_etc2=false
-environment/default_environment="res://default_env.tres"
