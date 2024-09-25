@@ -1,12 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://wmtdnsus072t"]
+[gd_scene load_steps=13 format=3 uid="uid://wmtdnsus072t"]
 
 [ext_resource type="Script" path="res://World/world.gd" id="1_5idqv"]
 [ext_resource type="FontFile" uid="uid://x6d7p5tic3au" path="res://World/PixelFontSize6.tres" id="2_id824"]
 [ext_resource type="PackedScene" uid="uid://cicada4eaujir" path="res://World/bg_objects_spawner.tscn" id="3_j7t4p"]
 [ext_resource type="PackedScene" uid="uid://c7mc1gad3vw7v" path="res://Obstacle/obstacle_spawner.tscn" id="3_owxjo"]
+[ext_resource type="FontFile" uid="uid://cpm3u2tbk40p0" path="res://World/PixelRPG.ttf" id="3_vmauo"]
 [ext_resource type="PackedScene" uid="uid://cwl7txi0uuy2g" path="res://Player/player.tscn" id="4_5ygm6"]
 [ext_resource type="PackedScene" uid="uid://dqicwuxqifw62" path="res://World/platform.tscn" id="5_6wh5j"]
 [ext_resource type="AudioStream" uid="uid://c8mtliu07rnut" path="res://Assets/ScoreSound.wav" id="7_tols4"]
+[ext_resource type="PackedScene" uid="uid://dkuk3lafmap26" path="res://World/start_point.tscn" id="8_rg1e3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ikbdn"]
 font = ExtResource("2_id824")
@@ -36,6 +38,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ControlInstruction" type="CenterContainer" parent="."]
+visible = false
 offset_left = 1.0
 offset_top = 44.0
 offset_right = 257.0
@@ -51,30 +54,31 @@ label_settings = SubResource("LabelSettings_op2ch")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="GameOver" type="CenterContainer" parent="."]
+[node name="GameOverContainer" type="CenterContainer" parent="."]
 visible = false
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 29.0
+offset_top = 32.0
 offset_right = -63.0
-offset_bottom = 74.0
+offset_bottom = 68.0
 grow_horizontal = 2
 scale = Vector2(1.25, 1.25)
 
-[node name="Label" type="Label" parent="GameOver"]
+[node name="Label" type="Label" parent="GameOverContainer"]
 texture_filter = 1
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_id824")
+theme_override_fonts/font = ExtResource("3_vmauo")
+theme_override_font_sizes/font_size = 20
 text = "Game Over"
 label_settings = SubResource("LabelSettings_wf1wi")
 
 [node name="GameOverInstruction" type="CenterContainer" parent="."]
-visible = false
 offset_top = 51.0
 offset_right = 320.0
 offset_bottom = 91.0
 
-[node name="Label" type="Label" parent="GameOverInstruction"]
+[node name="TryAgainMessage" type="Label" parent="GameOverInstruction"]
+visible = false
 texture_filter = 1
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_id824")
@@ -100,10 +104,15 @@ layer_0/tile_data = PackedInt32Array(65547, 327706, 4, 65546, 327706, 4, 65545, 
 
 [node name="HundrethsScoreSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_tols4")
+volume_db = -5.0
 
 [node name="GameOverDelay" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.4
 one_shot = true
+
+[node name="StartPoint" parent="." instance=ExtResource("8_rg1e3")]
+z_index = -1
+position = Vector2(96, 116)
 
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]

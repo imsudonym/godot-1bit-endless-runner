@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dmekf1p2o4uo"]
+[gd_scene load_steps=16 format=3 uid="uid://dmekf1p2o4uo"]
 
 [ext_resource type="Script" path="res://Obstacle/obstacle.gd" id="1_cthao"]
 [ext_resource type="Texture2D" uid="uid://div0lpu1m1uaw" path="res://Assets/tile_0017.png" id="2_xb1sb"]
@@ -53,90 +53,191 @@ _data = {
 "moving": SubResource("Animation_aq4lg")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rom1p"]
+size = Vector2(2.99997, 8.00001)
+
+[sub_resource type="Animation" id="Animation_6rlea"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [380]
+}
+
+[sub_resource type="Animation" id="Animation_sp4vf"]
+resource_name = "moving"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [380, 381]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vo5wv"]
+_data = {
+"RESET": SubResource("Animation_6rlea"),
+"moving": SubResource("Animation_sp4vf")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2j54b"]
+radius = 5.09902
+
 [node name="Obstacle" type="Node2D" groups=["obstacles"]]
 script = ExtResource("1_cthao")
 
-[node name="FlowerPots" type="Area2D" parent="."]
+[node name="Nature" type="Node2D" parent="."]
+
+[node name="FlowerPots" type="Area2D" parent="Nature"]
 visible = false
 
-[node name="Sprite2D" type="Sprite2D" parent="FlowerPots"]
+[node name="Sprite2D" type="Sprite2D" parent="Nature/FlowerPots"]
 position = Vector2(0, -7)
 texture = ExtResource("2_xb1sb")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FlowerPots"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Nature/FlowerPots"]
 position = Vector2(-1, -5)
 shape = SubResource("RectangleShape2D_xscq7")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="FlowerPots"]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Nature/FlowerPots"]
 position = Vector2(0, -5)
 scale = Vector2(0.6, 0.5)
 
-[node name="Mushrooms" type="Area2D" parent="."]
+[node name="Mushrooms" type="Area2D" parent="Nature"]
 visible = false
 
-[node name="Sprite2D" type="Sprite2D" parent="Mushrooms"]
+[node name="Sprite2D" type="Sprite2D" parent="Nature/Mushrooms"]
 position = Vector2(0, -8)
 texture = ExtResource("3_77u7i")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Mushrooms"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Nature/Mushrooms"]
 position = Vector2(-0.5, -6.5)
 shape = SubResource("RectangleShape2D_xscq7")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Mushrooms"]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Nature/Mushrooms"]
 position = Vector2(0, -5)
 scale = Vector2(0.6, 0.5)
 
-[node name="BugSleeping" type="Area2D" parent="."]
+[node name="Mobs" type="Node2D" parent="."]
+
+[node name="BugSleeping" type="Area2D" parent="Mobs"]
 visible = false
 
-[node name="Sprite2D" type="Sprite2D" parent="BugSleeping"]
+[node name="Sprite2D" type="Sprite2D" parent="Mobs/BugSleeping"]
 position = Vector2(0, -8)
 texture = ExtResource("4_17caq")
 hframes = 20
 vframes = 20
 frame = 324
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BugSleeping"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mobs/BugSleeping"]
 position = Vector2(0, -4)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_bmj10")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="BugSleeping"]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Mobs/BugSleeping"]
 position = Vector2(0, -4)
 scale = Vector2(0.6, 0.4)
 metadata/_edit_lock_ = true
 
-[node name="BugMoving" type="Area2D" parent="."]
+[node name="BugMoving" type="Area2D" parent="Mobs"]
 visible = false
 
-[node name="Sprite2D" type="Sprite2D" parent="BugMoving"]
+[node name="Sprite2D" type="Sprite2D" parent="Mobs/BugMoving"]
 position = Vector2(0, -8)
 texture = ExtResource("4_17caq")
 hframes = 20
 vframes = 20
 frame = 320
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BugMoving"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mobs/BugMoving"]
 position = Vector2(0, -5)
 rotation = 1.5708
 shape = SubResource("CircleShape2D_hh2mg")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="BugMoving"]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Mobs/BugMoving"]
 position = Vector2(-5.96046e-08, -4)
 scale = Vector2(0.5, 0.4)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="BugMoving"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Mobs/BugMoving"]
 libraries = {
 "": SubResource("AnimationLibrary_22u7u")
 }
 autoplay = "moving"
 
-[connection signal="body_entered" from="FlowerPots" to="." method="_on_obstacle_body_entered"]
-[connection signal="screen_exited" from="FlowerPots/VisibleOnScreenNotifier2D" to="." method="queue_free"]
-[connection signal="body_entered" from="Mushrooms" to="." method="_on_obstacle_body_entered"]
-[connection signal="screen_exited" from="Mushrooms/VisibleOnScreenNotifier2D" to="." method="queue_free"]
-[connection signal="body_entered" from="BugSleeping" to="." method="_on_obstacle_body_entered"]
-[connection signal="screen_exited" from="BugSleeping/VisibleOnScreenNotifier2D" to="." method="queue_free"]
-[connection signal="body_entered" from="BugMoving" to="." method="_on_obstacle_body_entered"]
-[connection signal="body_entered" from="BugMoving" to="." method="_on_mushrooms_body_entered"]
-[connection signal="screen_exited" from="BugMoving/VisibleOnScreenNotifier2D" to="." method="queue_free"]
+[node name="Flying" type="Node2D" parent="."]
+
+[node name="Bee" type="Area2D" parent="Flying"]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Flying/Bee"]
+position = Vector2(0, -1)
+texture = ExtResource("4_17caq")
+hframes = 20
+vframes = 20
+frame = 380
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Flying/Bee"]
+position = Vector2(0, -1.5)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_rom1p")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Flying/Bee"]
+position = Vector2(1.49012e-07, -1.5)
+scale = Vector2(0.4, 0.15)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Flying/Bee"]
+libraries = {
+"": SubResource("AnimationLibrary_vo5wv")
+}
+autoplay = "moving"
+
+[node name="Monster" type="Area2D" parent="Flying"]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Flying/Monster"]
+position = Vector2(0, -1)
+texture = ExtResource("4_17caq")
+hframes = 20
+vframes = 20
+frame = 380
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Flying/Monster"]
+position = Vector2(0, 1)
+rotation = 1.5708
+shape = SubResource("CircleShape2D_2j54b")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Flying/Monster"]
+position = Vector2(-5.96046e-08, -9.53674e-08)
+scale = Vector2(0.5, 0.6)
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Flying/Monster"]
+libraries = {
+"": SubResource("AnimationLibrary_vo5wv")
+}
+autoplay = "moving"
+
+[connection signal="body_entered" from="Nature/FlowerPots" to="." method="_on_obstacle_body_entered"]
+[connection signal="screen_exited" from="Nature/FlowerPots/VisibleOnScreenNotifier2D" to="." method="queue_free"]
+[connection signal="body_entered" from="Nature/Mushrooms" to="." method="_on_obstacle_body_entered"]
+[connection signal="screen_exited" from="Nature/Mushrooms/VisibleOnScreenNotifier2D" to="." method="queue_free"]
+[connection signal="body_entered" from="Mobs/BugSleeping" to="." method="_on_obstacle_body_entered"]
+[connection signal="screen_exited" from="Mobs/BugSleeping/VisibleOnScreenNotifier2D" to="." method="queue_free"]
+[connection signal="body_entered" from="Mobs/BugMoving" to="." method="_on_obstacle_body_entered"]
+[connection signal="body_entered" from="Mobs/BugMoving" to="." method="_on_mushrooms_body_entered"]
+[connection signal="screen_exited" from="Mobs/BugMoving/VisibleOnScreenNotifier2D" to="." method="queue_free"]

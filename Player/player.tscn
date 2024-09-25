@@ -139,6 +139,8 @@ shape = SubResource("RectangleShape2D_aiuxs")
 
 [node name="JumpSoundEffect" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_42kyd")
+volume_db = -10.0
 
 [node name="HurtSoundEffect" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_heoke")
+volume_db = -10.0

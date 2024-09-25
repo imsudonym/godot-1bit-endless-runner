@@ -3,9 +3,13 @@
 [ext_resource type="Script" path="res://World/cloud.gd" id="1_hp024"]
 [ext_resource type="Texture2D" uid="uid://dybhj3sotsrdx" path="res://Assets/tile_0013.png" id="2_bbjqt"]
 
-[node name="Cloud" type="Node2D"]
+[node name="Cloud" type="Node2D" groups=["background-objects"]]
 script = ExtResource("1_hp024")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -6)
 texture = ExtResource("2_bbjqt")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]
